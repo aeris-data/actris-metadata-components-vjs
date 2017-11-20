@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Vue Example</title>
+	<script type="text/javascript" component="aeris-data/aeris-commons-components-vjs@latest" src="https://rawgit.com/aeris-data/aeris-component-loader/master/aerisComponentLoader.js" ></script> 
+	<script type="text/javascript" component="aeris-data/aeris-metadata-components-vjs@latest" src="https://rawgit.com/aeris-data/aeris-component-loader/master/aerisComponentLoader.js" ></script> 
+	<style>
+	body {
+        font-family: 'Open Sans', sans-serif;
+        margin: 0;
+        height: 100%;
+      }
+	
+	</style>
+  </head>
+  <body>
+  <link rel="stylesheet" href="https://rawgit.com/aeris-data/aeris-metadata-components-vjs/develop/src/style/aeris-metadata-shared-style.css">
+ <style type="text/css">.metadata-container {
+    margin: 0 auto;
+    max-width: 1000px;
+  }
+  
+  .metadata-container .column {
+    width: 50%;
+}
+
+ .small-column {
+ 	witdh: 20%;
+ 	background-color: #d3d3d3;
+ 	padding:20px
+ }
+ 
+ .large-column {
+ 	width: 80%;
+ 	overflow-y: scroll;
+    padding: 2em;
+    flex: 2;
+ }
+
+.component-container {
+	margin:5px;
+}
+
+.sample-container {
+    display: flex;
+    height: 100vh;
+}
+
+.metadata-container.md-template-collection {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+}
+</style>
+
+<div class="sample-container">
+<div class="small-column">
+<button onclick="document.querySelector('aeris-metadata').setAttribute('identifier', '91440f71-9c3e-5d31-befc-2729873ce581')">Load...</button>
+</div>
+<div class="large-column">
+<aeris-metadata identifier="" lang="fr" service="https://sedoo.aeris-data.fr/catalogue/rest/metadatarecette/id/">
+</aeris-metadata>
+<md-template-actris></md-template-actris>
+</div>
+</div>
+<script src="dist/build.js"></script>
+
+  </body>
+</html>

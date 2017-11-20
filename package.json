@@ -1,7 +1,7 @@
 {
   "name": "actris-metadata-components-vjs",
-  "description": "Actris catalogue components. ",
-  "version": "0.1.4",
+  "description": "Actris metadata components. ",
+  "version": "0.1.0",
   "author": "Aeris",
   "private": false,
   "scripts": {

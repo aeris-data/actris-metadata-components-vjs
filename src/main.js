@@ -11,6 +11,9 @@ Vue.use(VueI18n);
 import VueResource from 'vue-resource';
 Vue.use(VueResource);
 
+import {VueAerisLanguagePlugin} from 'aeris-mixins'
+Vue.use(VueAerisLanguagePlugin)
+
 import ActrisDownload from './actris-download/actris-download.vue';
 import ActrisMetadata from './md-template-actris/md-template-actris.vue';
 

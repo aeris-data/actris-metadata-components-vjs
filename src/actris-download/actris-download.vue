@@ -221,13 +221,8 @@ export default {
 		},
 		
 		handleTheme: function(event) {
-	  		 if (this.visible) {
-	  			if (this.$el.querySelector("header")) {
-		  			this.$el.querySelector("header").style.background=event.detail.primary;
-		  		 }
-				this.theme = event.detail
-				this.ensureTheme();
-	  		 }
+			this.theme = event.detail
+			this.ensureTheme();
 	  		
 		},
 		
@@ -235,13 +230,14 @@ export default {
 	  		 if (this.visible) {
 	 			if (this.theme) {
 	 		  		var primary = this.theme.primary;
+	 		  		var emphasis = this.theme.emphasis;
 
 	 		  		var self = this;
 	 		  		var explicationText = this.$el.querySelector('.explication');
 	 		  		explicationText.style.color = primary;
 	 		  		
 	 		  		var header = this.$el.querySelector("header");
-	 		  		header.style.background = primary;
+	 		  		header.style.background = emphasis;
 	 			}
 	  		 }
 		},

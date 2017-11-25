@@ -16,28 +16,19 @@
 </i18n>
 
 <template>
-<span class="actris-download-host">
- <div class="component-container">
-      <header>
-        <h3><i class="fa fa-download"></i>{{$t('download')}}</h3>
-        <div class="aeris-icon-group"></div>
-      </header>
-      <main  style="text-align:justify">
-
-      	  <span class="explication">{{$t('explicationText')}}</span>
-<div v-if="loading" class="loadingbar">
-  <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
-  <span>{{$t("loading")}}</span>
-</div>
-<div class="year-container" v-show="years">
-  <div class="aeris-year" v-for='(item, index) in years' :key="item.year" @click="toggleYear(item)" :class="isSelected(item, years)">
-    <div class="year-label">{{$t('year')}}</div>
-    <div class="year-value">{{item.year}}</div>
+<actris-metadata-layout data-actris-download v-if="visible" :title="$t('download')" icon="fa fa-download">
+  <span class="explication">{{$t('explicationText')}}</span>
+  <div v-if="loading" class="loadingbar">
+    <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
+    <span>{{$t("loading")}}</span>
   </div>
-</div>
-</main>
-</div>
-</span>
+  <div class="year-container" v-show="years">
+    <div class="aeris-year" v-for='(item, index) in years' :key="item.year" @click="toggleYear(item)" :class="isSelected(item, years)">
+      <div class="year-label">{{$t('year')}}</div>
+      <div class="year-value">{{item.year}}</div>
+    </div>
+  </div>
+</actris-metadata-layout>
 </template>
 
 <script>
@@ -47,11 +38,6 @@ export default {
       type: String,
       default: 'en'
     }
-  },
-
-  mounted: function() {
-    var event = new CustomEvent('aerisThemeRequest', {});
-    document.dispatchEvent(event);
   },
 
   watch: {
@@ -66,9 +52,6 @@ export default {
 
     document.removeEventListener('cartContentResponse', this.cartContentResponseListener);
     this.cartContentResponseListener = null;
-
-    document.removeEventListener('aerisTheme', this.aerisThemeListener);
-    this.aerisThemeListener = null;
   },
 
   created: function() {
@@ -77,17 +60,10 @@ export default {
     // to get the datas
     this.aerisMetadataListener = this.handleRefresh.bind(this);
     document.addEventListener('aerisMetadataRefreshed', this.aerisMetadataListener);
-    // to apply theme
-    this.aerisThemeListener = this.handleTheme.bind(this);
-    document.addEventListener('aerisTheme', this.aerisThemeListener);
 
     this.cartContentResponseListener = this.cartContentResponse.bind(this);
     document.addEventListener('cartContentResponse', this.cartContentResponseListener);
 
-  },
-
-  updated: function() {
-    this.ensureTheme();
   },
 
   computed: {
@@ -97,8 +73,6 @@ export default {
   data() {
     return {
       visible: true,
-      theme: null,
-      aerisThemeListener: null,
       aerisMetadataListener: null,
       cartResponseListener: null,
       cartContentResponseListener: null,
@@ -229,28 +203,6 @@ export default {
       }
     },
 
-    handleTheme: function(event) {
-      this.theme = event.detail
-      this.ensureTheme();
-
-    },
-
-    ensureTheme: function() {
-      if (this.visible) {
-        if (this.theme) {
-          var primary = this.theme.primary;
-          var emphasis = this.theme.emphasis;
-
-          var self = this;
-          var explicationText = this.$el.querySelector('.explication');
-          explicationText.style.color = primary;
-
-          var header = this.$el.querySelector("header");
-          header.style.background = emphasis;
-        }
-      }
-    },
-
     handleSuccess: function(response) {
       var entries = response.body.entries
       console.log("Aeris - actris download - Entries : " + entries)
@@ -309,57 +261,46 @@ export default {
 </script>
 
 <style>
-	.actris-download-host {
-		display: block;
-	}
+[data-actris-download] .aeris-year:hover {
+  background: gainsboro;
+}
 
-	.actris-download-host .aeris-year:hover {
-		background: gainsboro;
-	}
+[data-actris-download] .aeris-year {
+  display: inline-block;
+  padding: 2px;
+  margin: 2px;
+}
 
-	.actris-download-host .aeris-year {
-		 display: inline-block;
-		padding: 2px;
-		margin: 2px;
-	}
+[data-actris-download] .aeris-year.selected {
+  background: rgba(153, 198, 109, 0.5);
+}
 
-	.actris-download-host .aeris-year.selected {
-		background: rgba(153, 198, 109, 0.5);
-	}
+[data-actris-download] .loadingbar {
+  background: gainsboro;
+  padding: 3px;
+}
 
-	.actris-download-host .explication{
-		font-size: 12px;
-		color: rgb(71, 101, 160);
-		text-align: justify
-	}
+[data-actris-download] .year-container {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
 
-	.actris-download-host .loadingbar {
-		background: gainsboro;
-		padding: 3px;
-	}
+[data-actris-download] .year-value {
+  display: block;
+  width: 40px;
+  text-align: center;
+  vertical-align: top;
+  cursor: pointer;
+  position: relative;
+}
 
-	.actris-download-host .year-container {
-		margin-top: 5px;
-		margin-bottom: 5px;
-	}
-
-	.actris-download-host .year-value {
-	    display: block;
-	    width: 40px;
-	    text-align: center;
-	    vertical-align: top;
-	    cursor: pointer;
-	    position: relative;
-	}
-
-	.actris-download-host .year-label {
-		display: block;
-	text-align: center;
-		font-size: 9px;
-	    text-transform: uppercase;
-	    margin-bottom: 2px;
-	    letter-spacing: .7px;
-	    cursor: pointer;
-	}
-
+[data-actris-download] .year-label {
+  display: block;
+  text-align: center;
+  font-size: 9px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+  letter-spacing: .7px;
+  cursor: pointer;
+}
  </style>

@@ -1,5 +1,5 @@
 <template>
-<div data-actris-metadata-layout>
+<div data-actris-metadata-layout data-template="metadata-block">
   <header>
     <h3><i :class="icon"></i>{{title}}</h3>
     <div class="aeris-icon-group"></div>
